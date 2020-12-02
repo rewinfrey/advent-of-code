@@ -14,13 +14,13 @@ def with_combination(input, index, limit, combo, &block)
 end
 
 part 1 do
-  with_combination(get_input("1.input"), 0, 2, []) do |vals|
+  with_combination(read("1.input"), 0, 2, []) do |vals|
     vals.map(&:to_i).inject(&:+) == 2020 && vals.map(&:to_i).inject(&:*)
   end
 end
 
 part 2 do
-  with_combination(get_input("1.input"), 0, 3, []) do |vals|
+  with_combination(read("1.input"), 0, 3, []) do |vals|
     vals.map(&:to_i).inject(&:+) == 2020 && vals.map(&:to_i).inject(&:*)
   end
 end

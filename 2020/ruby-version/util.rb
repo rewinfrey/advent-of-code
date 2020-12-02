@@ -3,6 +3,6 @@ def part(n)
   puts yield
 end
 
-def get_input(filename)
+def read(filename)
   File.read(filename).split("\n")
 end
