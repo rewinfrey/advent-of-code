@@ -10,9 +10,13 @@ def read(filename)
 end
 
 def get_input(year, day)
+  get_raw(year, day).split("\n")
+end
+
+def get_raw(year, day)
   HTTParty.get("https://adventofcode.com/#{year}/day/#{day}/input", {
     headers: {
       cookie: "session=#{ENV["SESSION"]}"
     }
-  }).body.split("\n")
+  }).body
 end
