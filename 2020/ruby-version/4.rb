@@ -13,7 +13,7 @@ part 1 do
 
   get_raw(2020,4).split("\n\n").filter do |line|
     line.split(" ").length == 8 ||
-      required.filter { |req| line.include?(req) }.length == 7
+      required.all? { |req| line.include?(req) }
   end.length
 end
 
