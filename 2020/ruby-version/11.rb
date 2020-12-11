@@ -71,19 +71,20 @@ def next_visible(input, position, &block)
   end
 end
 
-def next_visible_state(input, cur_state, row_index, col_index)
-  visible = []
+def next_visible_state(input, cur_state, position)
 
-  visible << next_visible(input, [row_index, col_index]) { |row, col| [row - 1, col - 1] }
-  visible << next_visible(input, [row_index, col_index]) { |row, col| [row - 1, col] }
-  visible << next_visible(input, [row_index, col_index]) { |row, col| [row - 1, col + 1] }
+  transforms = [
+    ->(row, col) { [row - 1, col - 1] },
+    ->(row, col) { [row - 1, col    ] },
+    ->(row, col) { [row - 1, col + 1] },
+    ->(row, col) { [row    , col - 1] },
+    ->(row, col) { [row    , col + 1] },
+    ->(row, col) { [row + 1, col - 1] },
+    ->(row, col) { [row + 1, col    ] },
+    ->(row, col) { [row + 1, col + 1] },
+  ]
 
-  visible << next_visible(input, [row_index, col_index]) { |row, col| [row, col - 1] }
-  visible << next_visible(input, [row_index, col_index]) { |row, col| [row, col + 1] }
-
-  visible << next_visible(input, [row_index, col_index]) { |row, col| [row + 1, col - 1] }
-  visible << next_visible(input, [row_index, col_index]) { |row, col| [row + 1, col] }
-  visible << next_visible(input, [row_index, col_index]) { |row, col| [row + 1, col + 1] }
+  visible = transforms.map { |t| next_visible(input, position, &t) }
 
   case cur_state
   when "L"
@@ -99,6 +100,6 @@ end
 
 part 2 do
   input = get_input(2020, 11).map { |row| row.split("") }
-  stable = iterate(input) { |input, seat, row_index, col_index| next_visible_state(input, seat, row_index, col_index) }
+  stable = iterate(input) { |input, seat, row_index, col_index| next_visible_state(input, seat, [row_index, col_index]) }
   seat_count(stable, "#")
 end
