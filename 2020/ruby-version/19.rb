@@ -126,14 +126,9 @@ part 2 do
   while true
     nums = re.scan /\d+/
     break if nums.length.zero?
-    require 'pry'
-    binding.pry
-
     nums.each { |num| re.gsub!(/\b#{num}\b/, "(#{rules[num]})") }
   end
 
   re.gsub! /[" ]/, ''
-  require 'pry'
-  binding.pry
   puts messages.count { |message| message.match? /#{re}/ }
 end
